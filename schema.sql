@@ -1,0 +1,23 @@
+-- eRozgar database. Run: mysql -u root -p < schema.sql
+CREATE DATABASE IF NOT EXISTS erozgar CHARACTER SET utf8mb4;
+USE erozgar;
+CREATE TABLE IF NOT EXISTS users (
+  id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(100) NOT NULL, email VARCHAR(190) NOT NULL UNIQUE,
+  pass_hash VARCHAR(200) NOT NULL, prefs JSON NULL, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE IF NOT EXISTS sessions (
+  token CHAR(64) PRIMARY KEY, user_id INT NOT NULL, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE);
+-- every deduplicated listing TinyFish finds is stored once, keyed by a hash of its URL
+CREATE TABLE IF NOT EXISTS jobs (
+  id INT AUTO_INCREMENT PRIMARY KEY, url_hash CHAR(40) NOT NULL UNIQUE, title VARCHAR(200), company VARCHAR(120),
+  location VARCHAR(120), source VARCHAR(40), level VARCHAR(20), is_internship TINYINT(1), remote TINYINT(1), visa TINYINT(1),
+  url TEXT, snippet TEXT, first_seen TIMESTAMP DEFAULT CURRENT_TIMESTAMP, last_seen TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  INDEX (last_seen));
+CREATE TABLE IF NOT EXISTS applications (
+  id INT AUTO_INCREMENT PRIMARY KEY, user_id INT NOT NULL, job_hash CHAR(40) NOT NULL, title VARCHAR(200), company VARCHAR(120),
+  url TEXT, source VARCHAR(40), applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, UNIQUE (user_id, job_hash),
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE);
+CREATE TABLE IF NOT EXISTS activity (
+  id INT AUTO_INCREMENT PRIMARY KEY, user_id INT NOT NULL, action VARCHAR(20), title VARCHAR(200), company VARCHAR(120),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, INDEX (user_id, id),
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE);

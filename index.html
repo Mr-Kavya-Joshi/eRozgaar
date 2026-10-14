@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>eRozgar: live jobs and internships</title>
+<link href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Mukta:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F1E4A6;--paper:#FBF3CF;--red:#B3382C;--indigo:#2F3E7E;--green:#3E7D4F;--ochre:#D68A1E;--ink:#2A1B12}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 Mukta,sans-serif}
+h1,h2,h3,.logo{font-family:'Yatra One',serif;font-weight:400;margin:0}
+.zig{height:22px;background:linear-gradient(135deg,var(--red) 25%,transparent 25%) -11px 0/22px 22px,linear-gradient(225deg,var(--red) 25%,transparent 25%) -11px 0/22px 22px,linear-gradient(315deg,var(--indigo) 25%,transparent 25%) 0 0/22px 22px,linear-gradient(45deg,var(--indigo) 25%,transparent 25%) 0 0/22px 22px;background-color:var(--ochre)}
+.dots{height:14px;background:radial-gradient(circle,var(--green) 3px,transparent 4px) 0 0/14px 14px,var(--paper);border-block:2px solid var(--ink)}
+.frame{max-width:1120px;margin:18px auto;border:6px double var(--ink);outline:10px solid transparent;background:var(--paper);box-shadow:0 0 0 6px var(--red),0 0 0 12px var(--indigo),0 0 0 18px var(--ochre)}
+.in{padding:0 28px}header{display:flex;align-items:center;gap:20px;padding:14px 28px;flex-wrap:wrap}
+.logo{font-size:32px;color:var(--red)}.logo b{color:var(--indigo);font-weight:400}
+nav{display:flex;gap:6px;margin-left:auto;align-items:center;flex-wrap:wrap}nav a,nav button{font:600 16px Mukta;padding:8px 14px;border:2px solid var(--ink);border-radius:8px;background:var(--paper);color:var(--ink);cursor:pointer;text-decoration:none}
+nav a.on,nav .primary{background:var(--indigo);color:#fff}nav a:hover,nav button:hover{background:var(--ochre);color:var(--ink)}
+.hero{display:grid;grid-template-columns:1.3fr 1fr;gap:28px;padding:26px 28px 10px}.hero h1{font-size:44px;line-height:1.1;color:var(--indigo)}
+.hero p{max-width:60ch}.feat{display:grid;gap:10px;align-content:start}.feat div{border:2px solid var(--ink);border-radius:10px;padding:10px 14px;background:#fff8}
+.feat div:nth-child(1){border-left:10px solid var(--red)}.feat div:nth-child(2){border-left:10px solid var(--green)}.feat div:nth-child(3){border-left:10px solid var(--indigo)}.feat div:nth-child(4){border-left:10px solid var(--ochre)}
+form.sb{display:flex;margin:18px 28px 6px;border:3px solid var(--ink);border-radius:999px;background:#fff;overflow:hidden}
+.sb label{flex:1;padding:8px 20px;border-right:2px solid var(--ink);display:flex;flex-direction:column;font-size:13px;font-weight:700;color:var(--red)}
+.sb input{border:0;outline:0;font:17px Mukta;background:none;color:var(--ink)}.sb button{border:0;background:var(--red);color:#fff;font:700 17px Mukta;padding:0 30px;cursor:pointer}
+.sb label:focus-within{background:#FFF3C4}.prefs{margin:6px 28px;font-size:15px}.prefs summary{cursor:pointer;font-weight:700;color:var(--indigo)}
+.prefs div{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px}.prefs select{font:16px Mukta;padding:5px;border:2px solid var(--ink);border-radius:6px;background:#fff}
+section{padding:20px 28px}h2{font-size:28px;color:var(--red);margin-bottom:4px}.sub{margin:0 0 12px;color:#5b4632;font-size:15px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.card{border:2px solid var(--ink);border-radius:12px;background:#fff;padding:14px;cursor:pointer;display:flex;flex-direction:column;gap:6px;border-top:8px solid var(--c,var(--indigo))}
+.card:nth-child(4n+1){--c:var(--red)}.card:nth-child(4n+2){--c:var(--green)}.card:nth-child(4n+3){--c:var(--ochre)}
+.card:hover{box-shadow:4px 4px 0 var(--ink)}.card h3{font-size:19px;line-height:1.25}.meta{font-size:14px;color:#5b4632}
+.tag{display:inline-block;font-size:12px;font-weight:700;padding:1px 8px;border:1.5px solid var(--ink);border-radius:99px;margin:2px 4px 0 0;background:var(--bg)}
+.match{margin-left:auto;font:700 14px Mukta;color:#fff;background:var(--green);border-radius:99px;padding:0 10px;align-self:flex-start}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.tabs button{font:600 15px Mukta;border:2px solid var(--ink);border-radius:99px;background:var(--paper);padding:4px 16px;cursor:pointer}.tabs button.on{background:var(--red);color:#fff}
+.status{padding:10px 14px;border:2px dashed var(--ink);border-radius:10px;background:#fff8;margin:8px 0}.err{border-color:var(--red);color:var(--red)}
+.modal{position:fixed;inset:0;background:#2A1B12aa;display:none;place-items:center;z-index:9;padding:14px}.modal.show{display:grid}
+.box{background:var(--paper);border:4px double var(--ink);border-radius:14px;max-width:560px;width:100%;padding:22px;box-shadow:0 0 0 6px var(--ochre);max-height:90vh;overflow:auto}
+.box input{width:100%;font:17px Mukta;padding:9px;border:2px solid var(--ink);border-radius:8px;margin:5px 0 12px}.box .row{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}
+.btn{font:700 16px Mukta;padding:9px 18px;border:2px solid var(--ink);border-radius:8px;background:var(--red);color:#fff;cursor:pointer;text-decoration:none;display:inline-block}.btn.alt{background:var(--paper);color:var(--ink)}
+.course{border-left:10px solid var(--indigo)}.hide{display:none!important}footer{padding:14px 28px;font-size:14px}
+li{margin:4px 0}
+@media(max-width:760px){.hero{grid-template-columns:1fr}.hero h1{font-size:34px}form.sb{flex-direction:column;border-radius:20px}.sb label{border-right:0;border-bottom:2px solid var(--ink)}.sb button{padding:12px}}
+@media(prefers-reduced-motion:no-preference){.card{transition:box-shadow .15s}}
+:focus-visible{outline:3px solid var(--indigo);outline-offset:2px}
+</style></head><body>
+<div class="zig"></div><div class="dots"></div>
+<div class="frame">
+<header><div class="logo">e<b>Rozgar</b></div>
+<nav id="nav"><button class="primary" onclick="openLogin()">Log in</button></nav></header>
+<div class="zig" style="height:12px"></div>
+
+<div id="v-home">
+<div class="hero"><div><h1>Find work that fits you, straight from the source.</h1>
+<p>eRozgar reads live openings from company careers pages and job portals, removes duplicates, and ranks what is left against your role, city, seniority and visa needs. Nothing here is saved copy: every search goes out to the web right now.</p></div>
+<div class="feat"><div><b>Live, not stored.</b> TinyFish searches and reads real pages on each search.</div><div><b>Many sources.</b> LinkedIn, Naukri, Internshala, Indeed, Greenhouse, Lever, Ashby and company sites.</div><div><b>Matched and ranked.</b> Each result shows a match score and why it matched.</div><div><b>One link to apply.</b> Duplicates merged, with the original posting link.</div></div></div>
+</div>
+
+<form class="sb" id="sf" onsubmit="return go(event)">
+<label>Skill or post<input id="q" placeholder="e.g. React developer, MBA marketing" autocomplete="off"></label>
+<label>Company<input id="co" placeholder="e.g. Infosys, any" autocomplete="off"></label>
+<label>City<input id="city" placeholder="e.g. Delhi, Pune, Remote" autocomplete="off"></label>
+<button>Search</button></form>
+<details class="prefs"><summary>My preferences</summary><div>
+<label>Type <select id="type"><option value="any">Jobs and internships</option><option value="job">Jobs</option><option value="internship">Internships</option></select></label>
+<label>Seniority <select id="level"><option value="any">Any</option><option value="intern">Intern</option><option value="fresher">Fresher / entry</option><option value="mid">Mid</option><option value="senior">Senior</option></select></label>
+<label>Visa <select id="visa"><option value="0">Not needed</option><option value="1">Needs sponsorship</option></select></label></div></details>
+
+<section id="results" class="hide"><h2 id="rt">Results</h2><p class="sub" id="rs"></p><div id="rg" class="grid"></div></section>
+
+<section id="s-pop"><h2 id="pt">Popular right now</h2><p class="sub">Fetched live from the web when you opened this page.</p><div id="pg" class="grid"></div></section>
+<section id="s-fresh"><h2>Popular for freshers</h2><p class="sub">Pick a field to see its top openings.</p>
+<div class="tabs" id="tabs"></div><div id="fg" class="grid"></div></section>
+<section id="s-courses"><h2>Popular courses</h2><p class="sub">Courses that recruiters and LinkedIn users rank highly, found live.</p><div id="cg" class="grid"></div></section>
+<footer>Powered by TinyFish Search and Fetch. Listings belong to their original sites; always confirm details on the posting.</footer>
+</div>
+
+<div class="modal" id="m-login"><div class="box"><h2>Log in to see details and apply</h2><p class="sub">Overviews are free to browse. Details and applying need an account.</p>
+<label>Name (new accounts only)<input id="ln" autocomplete="name"></label><label>Email<input id="le" type="email" autocomplete="email"></label><label>Password (6+ characters)<input id="lp" type="password" autocomplete="current-password"></label>
+<div class="row"><button class="btn alt" onclick="closeM()">Not now</button><button class="btn alt" onclick="login('signup')">Create account</button><button class="btn" onclick="login('login')">Log in</button></div></div></div>
+<div class="modal" id="m-job"><div class="box" id="jb"></div></div>
+<div class="modal" id="m-prof"><div class="box" id="pb"></div></div>
+<div class="zig"></div>
+
+<script>
+const $=id=>document.getElementById(id),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ls=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},sv=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch{}};
+let user=null,jobs=[],view='home',pending=null;const re={};
+const TABS={'MBA':'MBA management trainee','Web Dev':'web developer','DevOps':'DevOps engineer','Remote':'remote','Data':'data analyst','Design':'UI UX designer'};
+function prefs(){const p=ls('er_prefs',{});['q','co','city','type','level','visa'].forEach(k=>{if(p[k]!=null&&$(k))$(k).value=p[k]})}
+function getP(){const p={};['q','co','city','type','level','visa'].forEach(k=>p[k]=$(k).value.trim());sv('er_prefs',p);if(user)post('/api/prefs',p).catch(()=>{});return p}
+const post=async(p,b)=>{const r=await fetch(p,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)});const j=await r.json();if(!r.ok)throw new Error(j.error||'Request failed');return j};
+async function api(path,params){const r=await fetch(path+(params?'?'+new URLSearchParams(params):''));const j=await r.json();if(!r.ok)throw new Error(j.error||'Request failed');return j}
+function card(j,i,arr){return `<div class="card" tabindex="0" role="button" onclick="openJob('${arr}',${i})" onkeydown="if(event.key==='Enter')openJob('${arr}',${i})"><div style="display:flex"><h3>${esc(j.title)}</h3><span class="match" title="Match score">${j.score}%</span></div>
+<div class="meta">${esc(j.company||'Company on listing')} &middot; ${esc(j.location)}</div><div><span class="tag">${esc(j.source)}</span>${j.isInternship?'<span class="tag">Internship</span>':''}${j.level!=='unspecified'?`<span class="tag">${esc(j.level)}</span>`:''}${j.remote?'<span class="tag">Remote</span>':''}${j.visa?'<span class="tag">Visa help</span>':''}</div></div>`}
+const lists={res:[],pop:[],fresh:[]};
+function show(el,arr,key,msg){lists[key]=arr;$(el).innerHTML=arr.length?arr.map((j,i)=>card(j,i,key)).join(''):`<div class="status">${msg||'No matching openings found. Try a broader skill or another city.'}</div>`}
+async function go(e,nf){e&&e.preventDefault();re.res=()=>go(null,true);const p=getP();if(!p.q&&!p.co&&!p.city){$('q').focus();return false}
+ $('results').classList.remove('hide');$('rt').textContent='Results';$('rs').textContent='';$('rg').innerHTML='<div class="status">Searching live portals and careers pages through TinyFish...</div>';$('results').scrollIntoView({behavior:'smooth'});
+ try{const d=await api('/api/jobs',{q:[p.q,p.co].filter(Boolean).join(' '),city:p.city,type:p.type,level:p.level,visa:p.visa==='1'?'1':'0',fresh:nf?'0':'1'});
+  show('rg',d.jobs,'res');$('rs').textContent=`${d.unique} unique openings from ${d.sources.length} sources (${d.total} raw hits merged). Ranked by match. Updated ${new Date(d.fetchedAt).toLocaleTimeString()}.`}
+ catch(err){$('rg').innerHTML=`<div class="status err">${esc(err.message)}</div>`}return false}
+async function loadPop(type,el,key,q,limit,msg){re[key]=()=>loadPop(type,el,key,q,limit);$(el).innerHTML='<div class="status">Loading live openings...</div>';
+ try{const d=await api('/api/jobs',{q,type,city:$('city').value.trim(),level:'any',visa:'0',limit});show(el,d.jobs,key)}catch(err){$(el).innerHTML=`<div class="status err">${esc(err.message)}</div>`}}
+function tabs(){$('tabs').innerHTML=Object.keys(TABS).map(k=>`<button onclick="tab('${k}',this)">${k}</button>`).join('')}
+function tab(k,b){document.querySelectorAll('#tabs button').forEach(x=>x.classList.toggle('on',x===b));loadPop('any','fg','fresh',TABS[k]+' fresher entry level',5)}
+async function loadCourses(){try{const d=await api('/api/courses');$('cg').innerHTML=d.courses.map(c=>`<a class="card course" style="text-decoration:none;color:inherit" href="${esc(c.url)}" target="_blank" rel="noopener"><h3>${esc(c.title)}</h3><div class="meta">${esc(c.site)}</div><div>${esc((c.snippet||'').slice(0,140))}</div></a>`).join('')||'<div class="status">No courses found right now.</div>'}catch(err){$('cg').innerHTML=`<div class="status err">${esc(err.message)}</div>`}}
+function openJob(key,i){const j=lists[key][i];if(!user){pending=[key,i];return openLogin()}
+ post('/api/activity',{action:'Viewed',job:j}).catch(()=>{});
+ $('jb').innerHTML=`<h2>${esc(j.title)}</h2><p class="meta">${esc(j.company||'')} &middot; ${esc(j.location)} &middot; ${esc(j.source)}${j.alsoOn?' (also on '+esc(j.alsoOn.join(', '))+')':''}</p>
+ <p><b>Match ${j.score}%.</b> ${j.why.length?esc('Because '+j.why.join('; ')+'.'):'Matched on general relevance.'}</p><p>${esc(j.snippet)}</p>
+ <p class="meta">Seniority: ${esc(j.level)} &middot; Visa/relocation mentioned: ${j.visa?'yes':'not stated'} &middot; Remote: ${j.remote?'yes':'not stated'}</p>
+ <div class="row"><button class="btn alt" onclick="closeM()">Close</button><a class="btn" href="${esc(j.url)}" target="_blank" rel="noopener" onclick="applied('${key}',${i})">Apply on original site</a></div>`;$('m-job').classList.add('show')}
+function applied(key,i){post('/api/apply',{job:lists[key][i]}).catch(()=>{})}
+function openLogin(){$('m-login').classList.add('show');$('ln').focus()}
+function closeM(){document.querySelectorAll('.modal').forEach(m=>m.classList.remove('show'))}
+async function login(mode){const b={name:$('ln').value.trim(),email:$('le').value.trim(),password:$('lp').value};
+ try{const d=await post('/api/'+mode,b);user=d.user;$('lp').value='';closeM();render();if(d.user.prefs)sv('er_prefs',d.user.prefs);
+  await Promise.all(Object.values(re).map(f=>f()));if(pending){const[k,i]=pending;pending=null;openJob(k,i)}}catch(err){alert(err.message)}}
+async function logout(){await post('/api/logout',{}).catch(()=>{});user=null;closeM();setView('home');Object.values(re).forEach(f=>f())}
+async function profile(){const d=await api('/api/me'),a=d.applications,c=d.activity;$('pb').innerHTML=`<h2>${esc(user.name)}</h2><p class="meta">${esc(user.email)}</p><h3>Applied</h3>${a.length?'<ul>'+a.map(x=>`<li><a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.title)}</a>, ${esc(x.company||x.source)} <span class="meta">${new Date(x.t).toLocaleDateString()}</span></li>`).join('')+'</ul>':'<p class="meta">Nothing yet. Open a job and choose Apply.</p>'}
+ <h3>Recent activity</h3>${c.length?'<ul>'+c.slice(0,10).map(x=>`<li>${x.a}: ${esc(x.title)} <span class="meta">${new Date(x.t).toLocaleString()}</span></li>`).join('')+'</ul>':'<p class="meta">No activity yet.</p>'}
+ <div class="row"><button class="btn alt" onclick="logout()">Log out</button><button class="btn" onclick="closeM()">Close</button></div>`;$('m-prof').classList.add('show')}
+function setView(v){view=v;render();if(v==='internships')loadPop('internship','pg','pop',$('q').value||'internship',12);if(v==='jobs')loadPop('job','pg','pop',$('q').value||'jobs',12);if(v==='courses')$('s-courses').scrollIntoView({behavior:'smooth'})}
+function render(){const n=$('nav');
+ n.innerHTML=user?`<a href="#" class="${view==='home'?'on':''}" onclick="setView('home');return false">Home</a><a href="#" class="${view==='internships'?'on':''}" onclick="setView('internships');return false">Internships</a><a href="#" class="${view==='jobs'?'on':''}" onclick="setView('jobs');return false">Jobs</a><a href="#" class="${view==='courses'?'on':''}" onclick="setView('courses');return false">Popular Courses</a><button class="primary" onclick="profile()">Profile</button>`:'<button class="primary" onclick="openLogin()">Log in</button>';
+ $('v-home').classList.toggle('hide',!!user&&view!=='home');$('s-fresh').classList.toggle('hide',view==='internships'||view==='jobs');
+ $('pt').textContent=view==='internships'?'Internships open now':view==='jobs'?'Jobs open now':'Popular right now'}
+document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeM()}));
+(async()=>{try{const d=await api('/api/me');user=d.user;if(user&&user.prefs)sv('er_prefs',user.prefs)}catch{}prefs();tabs();render();loadPop('any','pg','pop','popular internships and jobs',8);loadCourses()})();
+</script></body></html>

@@ -1,0 +1,1 @@
+{"name":"erozgar","version":"1.1.0","scripts":{"start":"node server.js"},"engines":{"node":">=18"},"dependencies":{"mysql2":"^3.11.0"}}
